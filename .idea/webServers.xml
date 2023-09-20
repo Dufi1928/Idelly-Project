@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ea82e840-95f6-4280-bdf8-43ee7ea1a4f1" name="Idelly">
+        <fileTransfer accessType="SFTP" host="31.220.57.164" port="22" sshConfigId="5f79a253-ca83-4369-ad96-1631ce2492c1" sshConfig="root@31.220.57.164:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

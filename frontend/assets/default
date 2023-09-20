@@ -1,0 +1,44 @@
+server {
+    listen 80;
+    server_name mygameon.pro www.mygameon.pro;
+
+    location / {
+        root /GameOn/frontend/dist;
+        try_files $uri $uri/ /index.html;
+        index index.html;
+    }
+
+    # Redirection automatique de HTTP vers HTTPS
+    location ~* ^.+$ {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 9501 ssl;
+    server_name mygameon.pro www.mygameon.pro;
+
+    ssl_certificate /etc/letsencrypt/live/mygameon.pro/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mygameon.pro/privkey.pem;
+
+    location / {
+        proxy_pass http://31.220.57.164:9500;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name mygameon.pro www.mygameon.pro;
+
+    ssl_certificate /etc/letsencrypt/live/mygameon.pro/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mygameon.pro/privkey.pem;
+
+    location / {
+        root /GameOn/frontend/dist;
+        try_files $uri $uri/ /index.html;
+        index index.html;
+    }
+}
