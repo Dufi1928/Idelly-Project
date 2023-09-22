@@ -18,12 +18,13 @@ CORS_ORIGIN_WHITELIST = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "https://mygameon.pro",
-    'https://localhost:5174',
+    'https://localhost:*',
 ]
 
 
 INSTALLED_APPS = [
     'users',
+    'patients',
     'sslserver',
     'corsheaders',
     'rest_framework',

@@ -5,22 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b09b0d41-544b-4ef1-92a4-bcce9b41fd88" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/localhost.crt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/localhost.key" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/users/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/pages/Login/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/pages/Login/LoginStyles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/pages/SignUp/Signup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/pages/SignUp/SignupStyles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Idelly-Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Idelly-Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/users/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/patients/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/eas.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/NewPatient/NewPatient.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/NewPatient/NewPatientStules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/Pacients/PatientModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/Rounds/Rounds.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/pages/Rounds/RoundsStyles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/pg_catalog.0S1ZNQ.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/pg_catalog.0S1ZNQ.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4e69dcf9-6874-41d7-a960-473e3c54e589/storage_v2/_src_/database/idelly.D5TduA/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/assets/adaptive-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/adaptive-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/assets/gameon.conf" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/gameon.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/assets/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/Login/LoginStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/Login/LoginStyles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/SignUp/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/SignUp/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/SignUp/SignupStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/SignUp/SignupStyles.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +68,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.deploy.options&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Jt brains\\PyCharm\\2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -113,7 +127,13 @@
       <workItem from="1695123297300" duration="14183000" />
       <workItem from="1695152669480" duration="14956000" />
       <workItem from="1695193951487" duration="1773000" />
-      <workItem from="1695196343660" duration="365000" />
+      <workItem from="1695196343660" duration="437000" />
+      <workItem from="1695201169340" duration="13000" />
+      <workItem from="1695201263124" duration="27361000" />
+      <workItem from="1695284473034" duration="5046000" />
+      <workItem from="1695297851803" duration="10259000" />
+      <workItem from="1695313091854" duration="16285000" />
+      <workItem from="1695369115021" duration="595000" />
     </task>
     <servers />
   </component>

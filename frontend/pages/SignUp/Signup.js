@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View,Image, StyleSheet } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
@@ -7,6 +7,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Alert } from 'react-native';
 import SignupStyles from './SignupStyles';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const getFonts = () => Font.loadAsync({
     'Quicksand-Bold': require('../../src/fonts/Quicksand-Bold.ttf'),
@@ -27,7 +29,6 @@ export default function Signup({ navigation }) {
             return;
         }
 
-        // Define the data to be sent to the backend
         const userData = {
             email: email,
             password: password,
@@ -38,39 +39,38 @@ export default function Signup({ navigation }) {
         try {
             const response = await axios.post('https://mygameon.pro:9501/api/Register', userData);
 
-            if (response.status !== 200 && response.data.error) {
-                console.log(response.data.error)
-            } else if (response.status === 200) {
-                 Alert.alert(
-                    'Hello World', // Titre de l'alerte
-                    'Hello world', // Message de l'alerte
-                    [
-                        {text: 'OK', onPress: () => console.log('OK')},
-                    ],
-                    {cancelable: false}, // Si vous voulez que l'utilisateur puisse appuyer en dehors de l'alerte pour la fermer
-                );
-                // Here you can also navigate to another screen after a successful registration
-                // For example: navigation.navigate('YourNextScreen');
+            if (response && response.data) {
+                if (response.status !== 200 && response.data.error) {
+                    console.log(response.data.error);
+                } else if (response.status === 200) {
+                    // Sauvegardez les données dans le stockage local
+                    await AsyncStorage.setItem('userToken', response.data.jwt);
+                    await AsyncStorage.setItem('userData', JSON.stringify(userData));
+                    navigation.navigate('MainTabs', { screen: 'HomeTab', params: { screen: 'Home' } });
+                    
+                }
+            } else {
+                console.error("Response is invalid or missing data field.");
             }
         } catch (error) {
 
             console.error("Error details:", error.response.data.error);
             if (error.response) {
+                console.error("Error details:", error.response.data.error);
                 Alert.alert(
-                    'Erreur', // Titre de l'alerte
-                    JSON.stringify(error.response.data.error), // Message de l'alerte
-                    [
-                        {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    {cancelable: false}, // Si vous voulez que l'utilisateur puisse appuyer en dehors de l'alerte pour la fermer
+                    'Erreur', 
+                    JSON.stringify(error.response.data.error),
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                    {cancelable: false},
                 );
-                // console.log(error.response.headers);
-            } else if (error.request) {
-                // The request was made but no response was received
-                // console.log(error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
-                // console.log('Error', error.message);
+                console.error("Error:", error.message);
+                Alert.alert(
+                    'Erreur', 
+                    error.message,
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                    {cancelable: false},
+                );
             }
         }
     };
@@ -89,7 +89,8 @@ export default function Signup({ navigation }) {
                 colors={['#E6007E', '#662483']}
                 style={SignupStyles.container}
             >
-                <Text style={SignupStyles.textHeader}> Iscription</Text>
+                <Image source={require('../../assets/Logo/logo.png')} style={SignupStyles.logo} />
+            
                 <Input
                     inputContainerStyle={{ borderBottomWidth: 0, paddingLeft: 13, borderRadius: 10, backgroundColor: 'white' }}
                     leftIconContainerStyle={{ marginRight: 20 }}
@@ -133,8 +134,8 @@ export default function Signup({ navigation }) {
                         onPress={handleSignup} />
                 <Text
                     style={SignupStyles.redirectText}
-                    onPress={() => navigation.navigate('Login')}>
-                    Déjà un compte? Connectez-vous!
+                    onPress={() => navigation.navigate('LoginTab', { screen: 'LoginStack' })}>
+                    Vous avez un compte ? Connectez-vous
                 </Text>
 
             </LinearGradient>

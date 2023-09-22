@@ -7,6 +7,5 @@ urlpatterns = [
     path('user', UserView.as_view()),
     path('logout', LogoutView.as_view()),
     path('checkLoginView', checkLoginView.as_view()),
-    path('checkLoginView', checkLoginView.as_view()),
     path('CheckIfUserExist', CheckIfUserExist.as_view()),
 ]

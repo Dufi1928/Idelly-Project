@@ -3,8 +3,9 @@ import { StyleSheet } from 'react-native';
 const LoginStyles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         padding: 20,
+        justifyContent: 'center', 
+        alignItems: 'center',
     },
     button:{
         backgroundColor: '#E6007E',
@@ -20,6 +21,12 @@ const LoginStyles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         marginBottom: 30,
+    },
+    logo: {
+        marginBottom: 30,
+        width: 200,      
+        height: 100,     
+        resizeMode: 'contain', 
     }
 });
 

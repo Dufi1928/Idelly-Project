@@ -4,6 +4,7 @@ const SignupStyles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
     },
     button:{
@@ -27,6 +28,12 @@ const SignupStyles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         textDecorationLine: 'underline'
+    },
+    logo: {
+        marginBottom: 30,
+        width: 200,      
+        height: 100,     
+        resizeMode: 'contain', 
     }
 });
 
