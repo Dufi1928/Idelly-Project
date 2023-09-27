@@ -23,9 +23,8 @@ export default function Signup({ navigation }) {
     const [surname, setSurname] = useState('');
 
     const handleSignup = async () => {
-        // First, check if password and confirmPassword match
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            Alert.alert("Erreur", "Les mots de passe ne correspondent pas!");
             return;
         }
 
@@ -41,39 +40,23 @@ export default function Signup({ navigation }) {
 
             if (response && response.data) {
                 if (response.status !== 200 && response.data.error) {
-                    console.log(response.data.error);
+                    Alert.alert("Erreur", response.data.error);
                 } else if (response.status === 200) {
-                    // Sauvegardez les données dans le stockage local
                     await AsyncStorage.setItem('userToken', response.data.jwt);
                     await AsyncStorage.setItem('userData', JSON.stringify(userData));
                     navigation.navigate('MainTabs', { screen: 'HomeTab', params: { screen: 'Home' } });
-                    
                 }
             } else {
-                console.error("Response is invalid or missing data field.");
+                Alert.alert("Erreur", "La réponse est invalide ou le champ de données est manquant.");
             }
         } catch (error) {
-
-            console.error("Error details:", error.response.data.error);
-            if (error.response) {
-                console.error("Error details:", error.response.data.error);
-                Alert.alert(
-                    'Erreur', 
-                    JSON.stringify(error.response.data.error),
-                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                    {cancelable: false},
-                );
-            } else {
-                console.error("Error:", error.message);
-                Alert.alert(
-                    'Erreur', 
-                    error.message,
-                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                    {cancelable: false},
-                );
+            let errorMessage = error.message;
+            if (error.response && error.response.data.error) {
+                errorMessage = error.response.data.error;
             }
+            Alert.alert("Erreur", errorMessage);
         }
-    };
+    }
 
     useEffect(() => {
         SplashScreen.preventAutoHideAsync()
@@ -90,7 +73,7 @@ export default function Signup({ navigation }) {
                 style={SignupStyles.container}
             >
                 <Image source={require('../../assets/Logo/logo.png')} style={SignupStyles.logo} />
-            
+
                 <Input
                     inputContainerStyle={{ borderBottomWidth: 0, paddingLeft: 13, borderRadius: 10, backgroundColor: 'white' }}
                     leftIconContainerStyle={{ marginRight: 20 }}

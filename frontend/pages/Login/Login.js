@@ -18,6 +18,11 @@ export default function Login({ navigation }) {
     const [fontsLoaded, setFontsLoaded] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [apiError, setApiError] = useState('');
+
+
 
     const handleLogin = async () => {
         const userData = {
@@ -25,43 +30,50 @@ export default function Login({ navigation }) {
             password: password,
         };
 
+        // Validation de l'email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setEmailError('Veuillez entrer un email valide.');
+            return;
+        } else {
+            setEmailError(''); // réinitialiser le message d'erreur si l'email est valide
+        }
+
+        // Validation du mot de passe
+        if (password.length < 4) {
+            setPasswordError('Le mot de passe doit contenir au moins 6 caractères.');
+            return;
+        } else {
+            setPasswordError(''); // réinitialiser le message d'erreur si le mot de passe est valide
+        }
+
         try {
             const response = await axios.post('https://mygameon.pro:9501/api/login', userData);
-
             if (response && response.data) {
                 if (response.status === 200) {
                     await AsyncStorage.setItem('userToken', response.data.jwt);
                     await AsyncStorage.setItem('userData', JSON.stringify(userData));
                     navigation.navigate('MainTabs', { screen: 'HomeTab', params: { screen: 'Home' } });
+                } else if (response.status === 401) {
+                    setApiError('L\'email ou le mot de passe sont incorrects.');
                 } else if (response.data.error) {
-                    Alert.alert(
-                        'Erreur',
-                        JSON.stringify(response.data.error),
-                        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                        {cancelable: false},
-                    );
+                    setApiError(JSON.stringify(response.data.error));
                 }
             } else {
-                console.error("Response is invalid or missing data field.");
+                setApiError("La réponse est invalide ou le champ de données est manquant.");
             }
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.error) {
-                Alert.alert(
-                    'Erreur',
-                    JSON.stringify(error.response.data.error),
-                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                    {cancelable: false},
-                );
+            //  vérification si le code d'état de l'erreur est 401
+            if (error.response && error.response.status === 401) {
+                setApiError('L\'email ou le mot de passe sont incorrects.');
             } else {
-                Alert.alert(
-                    'Erreur',
-                    error.message,
-                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                    {cancelable: false},
-                );
+                let errorMessage = error.message;
+                if (error.response && error.response.data && error.response.data.error) {
+                    errorMessage = JSON.stringify(error.response.data.error);
+                }
+                setApiError(errorMessage);
             }
-        }
-    };
+        }}
 
 
     useEffect(() => {
@@ -71,6 +83,11 @@ export default function Login({ navigation }) {
             .catch(console.warn)
             .finally(() => SplashScreen.hideAsync());
     }, []);
+
+
+    useEffect(() => {
+        setApiError('');
+    }, [email,password]);
 
     if (fontsLoaded) {
         return (
@@ -84,6 +101,8 @@ export default function Login({ navigation }) {
                     inputContainerStyle={{ borderBottomWidth: 0, paddingLeft: 13, borderRadius: 10, backgroundColor: 'white' }}
                     leftIconContainerStyle={{ marginRight: 20 }}
                     placeholder="Email"
+                    errorMessage={emailError}
+                    errorStyle={{ color: '#EF9A9A' }}
                     leftIcon={{ type: 'font-awesome', name: 'envelope',color: '#662483' }}
                     onChangeText={value => setEmail(value.toLowerCase())}
                 />
@@ -91,11 +110,13 @@ export default function Login({ navigation }) {
                     inputContainerStyle={{ borderBottomWidth: 0, paddingLeft: 13, borderRadius: 10, backgroundColor: 'white' }}
                     leftIconContainerStyle={{ marginRight: 20 }}
                     placeholder="Mot de passe"
+                    errorMessage={passwordError}
+                    errorStyle={{ color: '#E57373' }}
                     leftIcon={{ type: 'font-awesome', name: 'lock',color: '#662483' }}
                     onChangeText={value => setPassword(value)}
                     secureTextEntry={true}
                 />
-
+                {apiError && <Text style={LoginStyles.error}>{apiError}</Text>}
                 <Button title="Se connecter"
                         titleStyle={{ fontFamily: 'Quicksand-Bold', fontSize: 20 }}
                         buttonStyle={LoginStyles.button}
@@ -103,7 +124,7 @@ export default function Login({ navigation }) {
                 <Text
                     style={SignupStyles.redirectText}
                     onPress={() => navigation.navigate('Signup', { screen: 'SignupStack' })}>
-                    Créer un compte 
+                    Créer un compte
                 </Text>
             </LinearGradient>
         );

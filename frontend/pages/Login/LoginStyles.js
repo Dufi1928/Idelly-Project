@@ -7,6 +7,10 @@ const LoginStyles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
     },
+    error:{
+        color: '#E57373',
+        marginBottom: 25
+    },
     button:{
         backgroundColor: '#E6007E',
         padding: 10,
