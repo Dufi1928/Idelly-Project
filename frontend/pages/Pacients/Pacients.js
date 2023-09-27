@@ -7,8 +7,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PacientsStyles from './PacientsStyles';
-import PatientModal from './PatientModal';
+import PatientModalCreate from './PatientModalCreate';
+import PatirntsModalUpdate from './PatirntsModalUpdate';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { RefreshControl, ActivityIndicator } from 'react-native';
+
 import axios from "axios";
 
 const getFonts = () => Font.loadAsync({
@@ -23,6 +26,9 @@ export default function Pacients({ navigation }) {
     const [update, setUpdate] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
+    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const filteredPatients = patients.filter(patient => {
         const patientName = `${patient.name} ${patient.surname}`.toLowerCase();
@@ -56,7 +62,12 @@ export default function Pacients({ navigation }) {
             .catch(console.warn)
             .finally(() => SplashScreen.hideAsync());
     }, [navigation]);
-
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        await handlPatients();
+        console.log(token)
+        setIsRefreshing(false);
+    };
 
     const removePatients = async (patientId) => {
         const dataToSend = {
@@ -73,7 +84,6 @@ export default function Pacients({ navigation }) {
                     }else{
                         setUpdate(true)
                     }
-
                 }
             } else {
                 console.error("Response is invalid or missing data field.");
@@ -84,10 +94,7 @@ export default function Pacients({ navigation }) {
             }
         }
     }
-
-    useEffect(()=>{
-
-        const handlPatients = async () => {
+    const handlPatients = async () => {
             const dataToSend = {
                 token: token,
             };
@@ -106,19 +113,10 @@ export default function Pacients({ navigation }) {
                 }
             }
         };
+    useEffect(()=>{
+
         handlPatients()
     },[token, navigation,update]);
-
-    const handleSignout = async () => {
-        try {
-            await AsyncStorage.clear();
-            console.log('AsyncStorage has been cleared!');
-            navigation.navigate('LoginTab', { screen: 'LoginStack', params: { screen: 'Login' } });
-        } catch (error) {
-            console.error('Error clearing AsyncStorage:', error);
-        }
-    }
-
 
     if (fontsLoaded) {
         return (
@@ -143,10 +141,20 @@ export default function Pacients({ navigation }) {
                 <SwipeListView
                     data={filteredPatients}
                     keyExtractor={item => item.id.toString()}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefreshing}
+                            onRefresh={handleRefresh}
+                            colors={['#E6007E', '#662483']} // Les couleurs de votre gradient
+                            tintColor={['#E6007E']} // La couleur de l'indicateur
+                        />
+                    }
                     renderItem={({ item }) => (
-                        <View style={PacientsStyles.clientsListBox}>
-                            <Text style={PacientsStyles.clientsListInner}>{item.name} {item.surname}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => { setSelectedPatient(item); setUpdateModalVisible(true); }}>
+                            <View style={PacientsStyles.clientsListBox}>
+                                <Text style={PacientsStyles.clientsListInner}>{item.name} {item.surname}</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
                     renderHiddenItem={ (data, rowMap) => (
                         <View style={{flexDirection: 'row', marginTop: 5, alignItems: 'center',justifyContent: 'flex-end'}}>
@@ -161,12 +169,12 @@ export default function Pacients({ navigation }) {
                     rightOpenValue={-75}
                     disableRightSwipe={true}
                 />
-                <PatientModal isVisible={isModalVisible} closeModal={() => setModalVisible(false)} />
+                <PatientModalCreate isVisible={isModalVisible} closeModal={() => setModalVisible(false)} />
+                {/*<PatirntsModalUpdate navigation={navigation} isVisible={isUpdateModalVisible} closeModal={() => setUpdateModalVisible(false)} PatientId={selectedPatient ? selectedPatient.id : null}/>*/}
             </LinearGradient>
-
-
         );
     } else {
         return <View style={PacientsStyles.container} />;
     }
 }
+

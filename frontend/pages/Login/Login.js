@@ -85,7 +85,7 @@ export default function Login({ navigation }) {
                     leftIconContainerStyle={{ marginRight: 20 }}
                     placeholder="Email"
                     leftIcon={{ type: 'font-awesome', name: 'envelope',color: '#662483' }}
-                    onChangeText={value => setEmail(value)}
+                    onChangeText={value => setEmail(value.toLowerCase())}
                 />
                 <Input
                     inputContainerStyle={{ borderBottomWidth: 0, paddingLeft: 13, borderRadius: 10, backgroundColor: 'white' }}

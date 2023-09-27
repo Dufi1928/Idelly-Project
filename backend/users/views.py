@@ -25,8 +25,8 @@ from cryptography.hazmat.backends import default_backend #Backend cryptographiqu
 def generate_jwt(user):
     payload = {
         'id': user.id,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-        'iat': datetime.datetime.utcnow()
+        'iat': datetime.datetime.utcnow(),
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30)
     }
     return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 

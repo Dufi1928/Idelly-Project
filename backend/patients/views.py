@@ -150,3 +150,93 @@ class DeletePatient(View):
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class ModifyPatient(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        token = data.get('token')
+        user_id = decode_jwt(token)
+
+        if not user_id:
+            return JsonResponse({"error": "userId est requis"}, status=400)
+
+        patient_id = data.get('patient_id')
+        if not patient_id:
+            return JsonResponse({"error": "patientId est requis"}, status=400)
+
+        # Récupération des données du patient
+        name = data.get('name')
+        surname = data.get('surname')
+        gender = data.get('gender')
+        date_of_birth = data.get('date_of_birth')
+        phone_number = data.get('phone_number')
+        address = data.get('address')
+        additional_info = data.get('additional_info')
+        treating_doctor = data.get('treating_doctor')
+        pharmacy = data.get('pharmacy')
+        other_contact = data.get('other_contact')
+        social_security_number = data.get('socialSecurityNumber')
+        # ... (comme dans le code de création)
+
+        # Validation des données (comme vous l'avez fait précédemment)
+
+        try:
+            User = get_user_model()
+            user = User.objects.get(pk=user_id)
+
+            patient = Patient.objects.get(pk=patient_id)
+            if not patient:
+                return JsonResponse({"error": "Ce patient n'existe pas."}, status=404)
+
+            # Mise à jour des données du patient
+            patient.name = name
+            patient.surname = surname
+            patient.gender = gender
+            patient.date_of_birth = data.get('date_of_birth')
+            patient.phone_number = data.get('phone_number')
+            patient.address = data.get('address')
+            patient.additional_info = data.get('additional_info')
+            patient.treating_doctor = data.get('treating_doctor')
+            patient.pharmacy = data.get('pharmacy')
+            patient.other_contact = data.get('other_contact')
+            patient.social_security_number = data.get('socialSecurityNumber')
+            patient.save()
+
+
+            serializer = PatientSerializer(patient)
+            return JsonResponse(serializer.data, safe=False, status=200)
+
+        except Patient.DoesNotExist:
+            return JsonResponse({"error": "Ce patient n'existe pas."}, status=404)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+@method_decorator(csrf_exempt, name='dispatch')
+class GetSinglePatient(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        token = data.get('token')
+        user_id = decode_jwt(token)
+        patient_id = data.get('patient_id')
+
+        if not user_id:
+            return JsonResponse({"error": "userId est requis"}, status=400)
+
+        if not patient_id:
+            return JsonResponse({"error": "patientId est requis"}, status=400)
+
+        try:
+            User = get_user_model()
+            user = User.objects.get(pk=user_id)
+            patient = Patient.objects.get(pk=patient_id, users__in=[user])
+
+            serializer = PatientSerializer(patient)
+
+            return JsonResponse(serializer.data, safe=False)
+        except Patient.DoesNotExist:
+            return JsonResponse({"error": "Ce patient n'existe pas ou n'est pas associé à cet utilisateur."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
