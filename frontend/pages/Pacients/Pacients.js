@@ -95,28 +95,28 @@ export default function Pacients({ navigation }) {
         }
     }
     const handlPatients = async () => {
-            const dataToSend = {
-                token: token,
-            };
-            try {
-                const response = await axios.post('https://mygameon.pro:9501/api/Patients', dataToSend);
-                if (response && response.data) {
-                    if (response && response.data && response.status === 200) {
-                        setPatients(response.data);
-                    }
-                }
-            } catch (error) {
-                if (error.response && error.response.data && error.response.data.error) {
-                    console.log(error)
-                } else {
-                    console.log(error)
+        const dataToSend = {
+            token: token,
+        };
+        try {
+            const response = await axios.post('https://mygameon.pro:9501/api/Patients', dataToSend);
+            if (response && response.data) {
+                if (response && response.data && response.status === 200) {
+                    setPatients(response.data);
                 }
             }
-        };
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.error) {
+                console.log(error)
+            } else {
+                console.log(error)
+            }
+        }
+    };
     useEffect(()=>{
 
         handlPatients()
-    },[token, navigation,update]);
+    },[token, navigation,update,isModalVisible]);
 
     if (fontsLoaded) {
         return (
@@ -170,7 +170,7 @@ export default function Pacients({ navigation }) {
                     disableRightSwipe={true}
                 />
                 <PatientModalCreate isVisible={isModalVisible} closeModal={() => setModalVisible(false)} />
-                {/*<PatirntsModalUpdate navigation={navigation} isVisible={isUpdateModalVisible} closeModal={() => setUpdateModalVisible(false)} PatientId={selectedPatient ? selectedPatient.id : null}/>*/}
+                <PatirntsModalUpdate navigation={navigation} isVisible={isUpdateModalVisible} closeModal={() => setUpdateModalVisible(false)} Patient={selectedPatient}/>
             </LinearGradient>
         );
     } else {

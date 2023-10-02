@@ -16,7 +16,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) => {
+const PatientModalUpdate = ({ isVisible, closeModal, Patient, navigation  }) => {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -39,58 +39,24 @@ const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) =
         setToken(myToken);
     };
 
+
     useEffect(() => {
-        const fetchData = async () => {
-            await getToken();
+        if (Patient!=null){
+            setName(Patient.name);
+            setSurname(Patient.surname);
+            setGender(Patient.gender);
+            setPhone_number(Patient.phone_number);
+            const dob = new Date(Patient.date_of_birth); // Convertir la date de naissance en un objet Date
+            setDateOfBirth(dob);
+            setSocialSecurityNumber(Patient.social_security_number);
+            setAddress(Patient.address);
+            setAdditional_info(Patient.additional_info);
+            setTreating_doctor(Patient.treating_doctor);
+            setPharmacy(Patient.pharmacy);
+            setOther_contact(Patient.other_contact);
+        }
 
-            if (!token) {
-                navigation.navigate('LoginTab', { screen: 'LoginStack', params: { screen: 'Login' } });
-                return;
-            }
-            const dataToSend = {
-                token: token,
-                patient_id: PatientId,
-            };
-
-            try {
-                const response = await axios.post('https://mygameon.pro:9501/api/login', dataToSend);
-
-                if (response && response.data) {
-                    if (response.status === 200) {
-                        setName(response.data.name);
-                        setSurname(response.data.surname);
-                        setDateOfBirth(response.data.date_of_birth);
-                        setGender(response.data.gender);
-                        setPhone_number(response.data.phone_number);
-                        setAddress(response.data.address);
-                        setAdditional_info(response.data.additional_info);
-                        setTreating_doctor(response.data.treating_doctor);
-                        setPharmacy(response.data.pharmacy);
-                        setOther_contact(response.data.other_contact);
-
-                        console.log(response.data);
-                    } else if (response.data.error) {
-                        Alert.alert(
-                            'Erreur',
-                            JSON.stringify(response.data.error),
-                            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-                            {cancelable: false},
-                        );
-                    }
-                } else {
-                    console.error("Response is invalid or missing data field.");
-                }
-
-            } catch (error) {
-                console.error("Erreur lors de la requête:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
-
+    }, [Patient]);
 
 
     const formatDate = (date) => {
@@ -157,7 +123,7 @@ const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) =
         setShowPicker(false);
     };
     const showDatepicker = () => {
-        setDateOfBirth(new Date(1598051730000));
+        // setDateOfBirth(new Date(1598051730000));
         setShowPicker(true);
     };
     const resetForm = () => {
@@ -185,7 +151,7 @@ const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) =
 
             {/* // ################################## Le bondeau du haut START  */}
             <View style={styles.ModalClose} >
-                <Text style={styles.NewPatient}>Nouveau patient
+                <Text style={styles.NewPatient}>Modifier le  patient
                 </Text>
                 <TouchableOpacity
                     style={styles.CloseButton}
@@ -262,11 +228,10 @@ const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) =
                         <Text style={styles.Label}>Numéro de sécurité sociale :</Text>
                         <View style={styles.inputContainer}>
                             <TextInput
-                                keyboardType="numeric"
                                 style={styles.inputLarge}
-                                placeholder="Numéro de sécurité sociale"
-                                onChangeText={setSocialSecurityNumber}
-                                value={socialSecurityNumber}
+                                placeholder="Sélectionner la date"
+                                value={dateOfBirth ? new Date(dateOfBirth).toLocaleDateString() : ""}
+                                onPressIn={showDatepicker}
                             />
                         </View>
                         <Text style={styles.Label}>Numero de telephone :</Text>
@@ -328,7 +293,7 @@ const PatientModalUpdate = ({ isVisible, closeModal, PatientId, navigation  }) =
                         </View>
                         <View style={styles.container}>
                             <TouchableOpacity style={styles.addButton} onPress={sendPatient}>
-                                <Text style={styles.addButtonText}>Ajouter </Text>
+                                <Text style={styles.addButtonText}>Modifier </Text>
                             </TouchableOpacity>
                         </View>
                     </View>

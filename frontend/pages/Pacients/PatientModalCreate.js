@@ -60,7 +60,7 @@ const PatientModalCreate = ({ isVisible, closeModal }) => {
             if (response && response.data) {
                 if (response.status !== 200 && response.data.error) {
                 }
-                if (response.status === 201 && response.status === 200) {
+                if (response.status === 201 || response.status === 200) {
                     console.log("Good");
                     closeModal();
                 }
