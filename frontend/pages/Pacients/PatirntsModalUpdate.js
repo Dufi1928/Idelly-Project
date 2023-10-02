@@ -29,19 +29,21 @@ const PatientModalUpdate = ({ isVisible, closeModal, Patient, navigation  }) => 
     const [pharmacy, setPharmacy] = useState("");
     const [other_contact, setOther_contact] = useState("");
     const [gender, setGender] = useState(null);
+    const [patientId, setPatientId] = useState(null);
     const [token, setToken] = useState(null);
     const [showPicker, setShowPicker] = useState(false);
 
 
     const getToken = async () => {
         const myToken = await AsyncStorage.getItem('userToken');
-        console.log(response.data)
         setToken(myToken);
     };
 
 
     useEffect(() => {
+        getToken();
         if (Patient!=null){
+            setPatientId(Patient.id);
             setName(Patient.name);
             setSurname(Patient.surname);
             setGender(Patient.gender);
@@ -63,10 +65,10 @@ const PatientModalUpdate = ({ isVisible, closeModal, Patient, navigation  }) => 
         return date.toISOString().split('T')[0];
     }
     const sendPatient = async () => {
-        getToken();
         const userData = {
             token : token,
             name: name,
+            patient_id: patientId,
             surname: surname,
             socialSecurityNumber: socialSecurityNumber,
             phone_number: phone_number,
@@ -79,11 +81,11 @@ const PatientModalUpdate = ({ isVisible, closeModal, Patient, navigation  }) => 
             other_contact: other_contact,
         };
         try {
-            const response = await axios.post('https://mygameon.pro:9501/api/CreatePatients', userData);
+            const response = await axios.post('https://mygameon.pro:9501/api/modify_patient', userData);
             if (response && response.data) {
                 if (response.status !== 200 && response.data.error) {
                 }
-                if (response.status === 201 && response.status === 200) {
+                if (response.status === 201 || response.status === 200) {
                     console.log("Good");
                     closeModal();
                 }
@@ -228,10 +230,11 @@ const PatientModalUpdate = ({ isVisible, closeModal, Patient, navigation  }) => 
                         <Text style={styles.Label}>Numéro de sécurité sociale :</Text>
                         <View style={styles.inputContainer}>
                             <TextInput
+                                keyboardType="numeric"
                                 style={styles.inputLarge}
-                                placeholder="Sélectionner la date"
-                                value={dateOfBirth ? new Date(dateOfBirth).toLocaleDateString() : ""}
-                                onPressIn={showDatepicker}
+                                placeholder="Numéro de sécurité sociale"
+                                onChangeText={setSocialSecurityNumber}
+                                value={socialSecurityNumber}
                             />
                         </View>
                         <Text style={styles.Label}>Numero de telephone :</Text>

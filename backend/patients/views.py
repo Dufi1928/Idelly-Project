@@ -12,13 +12,12 @@ import jwt
 
 def decode_jwt(token):
     try:
-        # Remplacez 'your_secret_key' par la clé secrète utilisée pour signer le JWT.
         decoded_payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         return decoded_payload['id']  # Ceci est le payload décodé du JWT
     except jwt.ExpiredSignatureError:
         return "bob"
     except jwt.InvalidTokenError:
-        return "marley"
+        return token
 
 @method_decorator(csrf_exempt, name='dispatch')
 class GetPatients(View):
@@ -178,9 +177,6 @@ class ModifyPatient(View):
         pharmacy = data.get('pharmacy')
         other_contact = data.get('other_contact')
         social_security_number = data.get('socialSecurityNumber')
-        # ... (comme dans le code de création)
-
-        # Validation des données (comme vous l'avez fait précédemment)
 
         try:
             User = get_user_model()
@@ -190,20 +186,27 @@ class ModifyPatient(View):
             if not patient:
                 return JsonResponse({"error": "Ce patient n'existe pas."}, status=404)
 
-            # Mise à jour des données du patient
+            # Si le numéro de sécurité sociale est modifié, vérifiez s'il est unique
+            new_social_security_number = data.get('socialSecurityNumber')
+            if new_social_security_number != patient.social_security_number:
+                existing_patient = Patient.objects.filter(social_security_number=new_social_security_number).exclude(
+                    pk=patient_id).first()
+                if existing_patient:
+                    return JsonResponse({"error": "Le numéro de sécurité sociale existe déjà."}, status=400)
+                patient.social_security_number = new_social_security_number  # Mettez à jour seulement si différent
+
+            # Mise à jour des autres champs
             patient.name = name
             patient.surname = surname
             patient.gender = gender
-            patient.date_of_birth = data.get('date_of_birth')
-            patient.phone_number = data.get('phone_number')
-            patient.address = data.get('address')
-            patient.additional_info = data.get('additional_info')
-            patient.treating_doctor = data.get('treating_doctor')
-            patient.pharmacy = data.get('pharmacy')
-            patient.other_contact = data.get('other_contact')
-            patient.social_security_number = data.get('socialSecurityNumber')
+            patient.date_of_birth = date_of_birth
+            patient.phone_number = phone_number
+            patient.address = address
+            patient.additional_info = additional_info
+            patient.treating_doctor = treating_doctor
+            patient.pharmacy = pharmacy
+            patient.other_contact = other_contact
             patient.save()
-
 
             serializer = PatientSerializer(patient)
             return JsonResponse(serializer.data, safe=False, status=200)
@@ -213,6 +216,7 @@ class ModifyPatient(View):
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class GetSinglePatient(View):

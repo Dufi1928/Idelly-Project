@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b09b0d41-544b-4ef1-92a4-bcce9b41fd88" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/Login/LoginStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/Login/LoginStyles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/SignUp/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/SignUp/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/patients/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/patients/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/Pacients/PatirntsModalUpdate.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/Pacients/PatirntsModalUpdate.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,29 +28,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/ApiHuggi/api.huggii.com/Lafraisedentaires&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Jt brains\\PyCharm\\2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/ApiHuggi/api.huggii.com/Lafraisedentaires",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "D:\\Jt brains\\PyCharm\\2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Idelly-Project\frontend\pages\Login" />
@@ -115,6 +115,7 @@
       <workItem from="1695633992728" duration="159000" />
       <workItem from="1695763192034" duration="2873000" />
       <workItem from="1695842963210" duration="5335000" />
+      <workItem from="1696275142962" duration="5681000" />
     </task>
     <servers />
   </component>
